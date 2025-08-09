@@ -1,0 +1,57 @@
+<?php
+session_start(); // ← importante
+$conn = new mysqli("localhost", "root", "", "estadia");
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+}
+
+$factura_codigo = $_GET['factura'] ?? '';
+$factura = null;
+
+if ($factura_codigo) {
+    $stmt = $conn->prepare("SELECT * FROM facturas WHERE numero_factura = ?");
+    $stmt->bind_param("s", $factura_codigo);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $factura = $result->fetch_assoc();
+    $stmt->close();
+}
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Envío</title>
+</head>
+<body>
+
+<h2>Registrar Envío para Factura: <?php echo htmlspecialchars($factura_codigo); ?></h2>
+
+<?php if ($factura): ?>
+<form method="POST" action="guardar_envio.php">
+    <input type="hidden" name="factura_id" value="<?php echo $factura['id']; ?>">
+
+    <p>Cliente: <?php echo htmlspecialchars($factura['cliente']); ?></p>
+    <p>Fecha de factura: <?php echo htmlspecialchars($factura['fecha_factura']); ?></p>
+    <p><strong>Usuario actual:</strong> <?php echo htmlspecialchars($_SESSION['usuario']); ?> (<?php echo htmlspecialchars($_SESSION['rol']); ?>)</p>
+
+    <label>Cajas:</label>
+    <input type="number" name="cajas" required><br>
+
+    <label>Tarimas:</label>
+    <input type="number" name="tarimas" required><br>
+
+    <label>Piezas:</label>
+    <input type="number" name="piezas" required><br>
+
+    <label>Paquetería:</label>
+    <input type="text" name="paqueteria" required><br>
+
+    <button type="submit">Guardar e Imprimir</button>
+</form>
+<?php else: ?>
+<p style="color:red;">Factura no encontrada. Asegúrate que el código escaneado es correcto.</p>
+<?php endif; ?>
+
+</body>
+</html>

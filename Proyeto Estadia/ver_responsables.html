@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrador</title>
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgb(255, 255, 255);
+            padding: 10px 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .navbar-left img {
+            height: 60px;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-right a {
+            margin-left: 25px;
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-right a:hover {
+            color: #2e5bff;
+        }
+
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-left: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #b52a37;
+        }
+
+        .content {
+            padding: 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="navbar-left">
+            <!-- Logos -->
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlpJ9ZGDCDVU4iaxd0b39ss493JDds11xdow&s" height="60">
+            <img src="https://media.licdn.com/dms/image/v2/C560BAQEA9kbFZCiLbw/company-logo_200_200/company-logo_200_200/0/1651865689135/grupo_cva_logo?e=2147483647&v=beta&t=CbsAS1ay9JkU1TVtoAFXRsCWAZRtbZSiqSj5VTHDujs" height="60">
+        </div>
+        <div class="navbar-right">
+            <!-- Enlaces -->
+            <a href="ver_responsables.html">Inicio</a>
+            <a href="ver_usuarios.php">Usuarios</a>
+            <a href="ver_envio.php">Registros</a>
+            <button class="logout-btn" onclick="confirmarCierreSesion()">Cerrar sesión</button>
+        </div>
+    </div>
+
+    <div class="content">
+        <h1>Bienvenido Administrador</h1>
+        <p>Selecciona una opción del menú para continuar.</p>
+        <img src="https://media.licdn.com/dms/image/v2/D5622AQGv0yO6R9oEHg/feedshare-shrink_800/feedshare-shrink_800/0/1698863041813?e=2147483647&v=beta&t=R6Xy9WCpv7Y2agpPWt0hNBxcsT9qTcf0RVuBw_3qlMM" height="500">
+    </div>
+
+    <script>
+        function confirmarCierreSesion() {
+            Swal.fire({
+                title: '¿Cerrar sesión?',
+                text: "¿Estás seguro de que deseas cerrar sesión?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, cerrar sesión',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "logout.php"; // Cambia por tu ruta real de cierre de sesión
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
